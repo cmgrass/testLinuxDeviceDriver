@@ -18,31 +18,31 @@ tree for building the module.
 
 ## To make:
 In the root directoy, just run:
-'''
+```
 $ make
-'''
+```
 
 ## To install device driver module:
 Use insmod
-'''
+```
 $ insmod [filename] [module options...]
-'''
+```
 
 EX: (sudo)
-'''
+```
 $ sudo insmod hello.ko
                     ^ Kernel object
-'''
+```
 
 ## To verify it was installed:
-'''
+```
 $ lsmod | grep hello
 hello                  16384  0
-'''
+```
 
 ## Our debug is printing to the syslog.
 ## (bcause use printk for kernel modules, and for the experiment using KERN_ALERT)
-'''
+```
 $ tail /var/log/syslog
 .
 .
@@ -51,10 +51,10 @@ Feb 16 13:24:24 cmgrass-ubuntu kernel: [ 1603.534595] hello: module verification
 Feb 16 13:24:24 cmgrass-ubuntu kernel: [ 1603.535161] HELLO World!
 .
 .
-'''
+```
 
 ## Remove the module
-'''
+```
 $ sudo rmmod hello
 $ lsmod | grep hello
 $ tail /var/log/syslog
@@ -63,4 +63,4 @@ $ tail /var/log/syslog
 Feb 16 13:29:30 cmgrass-ubuntu kernel: [ 1909.263426] Goodbye, cruel world
 .
 .
-'''
+```
