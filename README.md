@@ -2,7 +2,7 @@
 https://lwn.net/Kernel/LDD3/
 
 ## Maintained in recent kernel version by the following project:
-https://github.com/martinezjavier/ldd3/blob/master/
+https://github.com/martinezjavier/ldd3/
 
 ## ----- Notes -----
 The makefile is assuming that the currently running kernel's source tree
@@ -41,7 +41,7 @@ hello                  16384  0
 ```
 
 ## Our debug is printing to the syslog.
-## (bcause use printk for kernel modules, and for the experiment using KERN_ALERT)
+## (because use printk for kernel modules, and for the experiment using KERN_ALERT)
 ```
 $ tail /var/log/syslog
 .

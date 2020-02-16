@@ -25,7 +25,7 @@ clean:
 
 else
     # called from kernel build system: just declare what our modules are
-    obj-m := hello.o
+    obj-m := hello.o grassdrv.o
 endif
 
 
