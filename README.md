@@ -1,7 +1,8 @@
-# These are my experiments steming from:
+# ----- Source -----
+## These are my experiments stemming from:
 https://lwn.net/Kernel/LDD3/
 
-# Maintained in recent kernel version by the following project:
+## Maintained in recent kernel version by the following project:
 https://github.com/martinezjavier/ldd3/blob/master/
 
 # ----- Notes -----
@@ -16,11 +17,11 @@ $ uname -r
 The makefile then passes this project's directory to the kernel's source
 tree for building the module.
 
-# To make:
+## To make:
 In the root directoy, just run:
 $ make
 
-# To install device driver module:
+## To install device driver module:
 Use insmod
 $ insmod [filename] [module options...]
 
@@ -28,12 +29,12 @@ EX: (sudo)
 $ sudo insmod hello.ko
                     ^ Kernel object
 
-# To verify it was installed:
+## To verify it was installed:
 $ lsmod | grep hello
 hello                  16384  0
 
-# Our debug is printing to the syslog.
-# (bcause use printk for kernel modules, and for the experiment using KERN_ALERT)
+## Our debug is printing to the syslog.
+## (bcause use printk for kernel modules, and for the experiment using KERN_ALERT)
 $ tail /var/log/syslog
 .
 .
@@ -43,7 +44,7 @@ Feb 16 13:24:24 cmgrass-ubuntu kernel: [ 1603.535161] HELLO World!
 .
 .
 
-# Remove the module
+## Remove the module
 $ sudo rmmod hello
 $ lsmod | grep hello
 $ tail /var/log/syslog
