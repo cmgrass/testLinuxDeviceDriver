@@ -1,0 +1,11 @@
+.cache.mk
+hello.ko
+.hello.ko.cmd
+hello.mod.c
+hello.mod.o
+.hello.mod.o.cmd
+hello.o
+.hello.o.cmd
+modules.order
+Module.symvers
+.tmp_versions/
