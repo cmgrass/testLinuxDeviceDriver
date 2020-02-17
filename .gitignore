@@ -6,6 +6,13 @@ hello.mod.o
 .hello.mod.o.cmd
 hello.o
 .hello.o.cmd
+grassdrv.ko
+.grassdrv.ko.cmd
+grassdrv.mod.c
+grassdrv.mod.o
+.grassdrv.mod.o.cmd
+grassdrv.o
+.grassdrv.o.cmd
 modules.order
 Module.symvers
 .tmp_versions/
