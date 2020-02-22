@@ -25,17 +25,11 @@ $ make
 ## To install device driver module:
 Install script
 ```
-$ make
 $ sudo sh install_gdrv.sh
 ```
 
-Otherwise, the script is doing at least the following:
+Otherwise to manually install, the script is doing at least the following:
 Use insmod
-```
-$ insmod [filename] [module options...]
-```
-
-EX: (sudo)
 ```
 $ sudo insmod grassdrv.ko
                     ^ Kernel object
@@ -43,8 +37,8 @@ $ sudo insmod grassdrv.ko
 
 ## To verify it was installed:
 ```
-$ lsmod | grep hello
-hello                  16384  0
+$ lsmod | grep grassdrv
+grassdrv                  16384  0
 ```
 
 ## Our debug is printing to the syslog.
@@ -53,12 +47,14 @@ hello                  16384  0
 $ tail /var/log/syslog
 .
 .
-Feb 16 13:24:24 cmgrass-ubuntu kernel: [ 1603.534526] hello: loading out-of-tree module taints kernel.
-Feb 16 13:24:24 cmgrass-ubuntu kernel: [ 1603.534595] hello: module verification failed: signature and/or required key missing - tainting kernel
+Feb 16 13:24:24 cmgrass-ubuntu kernel: [ 1603.534526] grassdrv: loading out-of-tree module taints kernel.
+Feb 16 13:24:24 cmgrass-ubuntu kernel: [ 1603.534595] grassdrv: module verification failed: signature and/or required key missing - tainting kernel
 Feb 16 13:24:24 cmgrass-ubuntu kernel: [ 1603.535161] HELLO World!
 .
 .
 ```
+
+Note: You can pass  '-f' to 'tail' so it follows the written stream
 
 ## Remove the module
 Uninstall script
@@ -68,8 +64,8 @@ $ sudo sh uninstall_gdrv.sh
 
 Otherwise, the script is doing at least the following:
 ```
-$ sudo rmmod hello
-$ lsmod | grep hello
+$ sudo rmmod grassdrv
+$ lsmod | grep grassdrv
 $ tail /var/log/syslog
 .
 .
