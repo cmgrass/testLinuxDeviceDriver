@@ -73,3 +73,82 @@ Feb 16 13:29:30 cmgrass-ubuntu kernel: [ 1909.263426] Goodbye, cruel world
 .
 .
 ```
+
+## Block diagram
+This diagram contains my view of the key structures and interfaces.
+
+```
+Three Key Structures:
+1) struct file_operations (fops)
+   The fops is a global file operations structure that contains:
+   - Pointer to module that owns it
+   - Pointer to functions that handle file operations (open, read, write, etc..)
+
+   Any time a file is opened, the kernel will assign a pointer to the associated
+   driver's fops structure.
+
+   If a user program opens a file, we can think of the file as an 'object',
+   and the callbacks in the fops structure are the 'methods' that act on the file.
+
+2) struct file
+   Not to be confused with user space C library FILE structure, this kernel space
+   file structure is allocated by the kernel whenever open is called on a file.
+   The kernel will point the file structure's '*f_op' member to the target
+   device's file_operations structure.
+
+   There are other important fields, but these are the basics.
+
+3) inode
+   An 'inode' structure is used by the kernel internnaly to represent files.
+   Multiple file structures can exist for the same file, but they all point
+   to only one inode for the file.
+
+   For device drivers, this contains two key data structures:
+   - Major and Minor device number.
+   - Pointer to char device structure.
+     (because in our case, we registered a chardev)
+
+
+
+/---------------------/  /---------------------/  /---------------------/
+/      User app A     /  /      User app A     /  /      User app A     /
+/ open(/dev/grassdrv) /  / open(/dev/grassdrv) /  / open(/dev/grassdrv) /
+/---------------------/  /---------------------/  /---------------------/
+/     struct FILE     /  /     struct FILE     /  /     struct FILE     /
+/---------------------/  /---------------------/  /---------------------/
+                     \              |              /
+                      \             |             /
+                       \            |            /
+                        \       user space      /
+--------------------------------------------------------------------------------
+                          \    kernel space   /
+                           \        |        /
+                            \       |       /
+                           /-----------------/
+  _______________ _________/      inode      /________
+ |               |         /-----------------/        |
+ |               |                  |                 |
+ |               |                  |                 |
+ |        /--------------/  /--------------/  /--------------/
+ |        / struct file  /  / struct file  /  / struct file  /
+ |        / (instance A) /  / (instance A) /  / (instance A) /
+ |        /--------------/  /--------------/  /--------------/
+ |            / ____________________/                /
+ |           / / ___________________________________/
+ |          / / /
+ |  /----------------------------------------------------------/
+ |  /      | | |    Device Driver Module                       /
+ |  /      | | |                                               /
+ |  / /-------------------------/  /-------------------------/ /
+ |  / / struct file_operations  /  / struct file_operations  / /
+ |  / /-------------------------/  /-------------------------/ /
+  --/-/-->  char dev struct     /  /      char dev struct    / /
+    / /-------------------------/  /-------------------------/ /
+    / /     Device A driver     /  /     Device Z driver     / /
+    / /    (grassdrv) driver    /  / (n/a, I only have one   / /
+    / /                         /  /  device driver)         / /
+    / /-------------------------/  /-------------------------/ /
+    /                                                          /
+    /----------------------------------------------------------/
+
+```
