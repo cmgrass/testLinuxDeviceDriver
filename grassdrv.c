@@ -56,12 +56,34 @@ module_param(grassdrv_dev_major, int, S_IRUGO);
 module_param(grassdrv_dev_minor, int, S_IRUGO);
 module_param(grassdrv_count, int, S_IRUGO);
 
+/* ----- handler functions ----- */
+int grassdrv_open(struct inode *inode_p, struct file *file_p) {
+  printk(KERN_ALERT "[grassdrv]_open received\n");
+  return SUCCESS;
+}
 
-/* ----- functions ----- */
+ssize_t grassdrv_read(struct file *file_p, char __user *buff_p, size_t count,
+                      loff_t *f_pos_p) {
+  printk(KERN_ALERT "[grassdrv]_read received\n");
+  return 0;
+}
+
+ssize_t grassdrv_write(struct file *file_p, const char __user *buff_p,
+                       size_t count, loff_t *f_pos_p) {
+  printk(KERN_ALERT "[grassdrv]_write received\n");
+  return 0;
+}
+
+int grassdrv_release(struct inode *inode_p, struct file *file_p) {
+  printk(KERN_ALERT "[grassdrv]_release received\n");
+  return SUCCESS;
+}
+
+/* ----- init/uninit functions ----- */
 static int grassdrv_init(void)
 {
-  int                   status;
-  dev_t                 devnums;
+  int   status;
+  dev_t devnums;
 
   /* 1) Get dynamically-allocated driver numbers from the system
    * Major: Represent the driver that will manage the device
