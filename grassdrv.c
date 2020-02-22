@@ -12,7 +12,7 @@
 #define SUCCESS 0
 #define GRASSDRV_MAX_DEVICES 1
 #define GRASSDRV_DEV_MINOR_START 0
-#define GRASSDRV_DEV_NAME_STR "gdrv"
+#define GRASSDRV_DEV_NAME_STR "grassdrv"
 
 /* ----- globals ----- */
 /* Globals for module parameters */
