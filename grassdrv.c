@@ -15,7 +15,6 @@
 #define GRASSDRV_DEV_NAME_STR "grassdrv"
 
 /* ----- globals ----- */
-/* Globals for module parameters */
 int grassdrv_dev_major = 0;
 int grassdrv_dev_minor = 0;
 int grassdrv_count = GRASSDRV_MAX_DEVICES; /* TODO: FYI, the code is written for only ONE device */
@@ -25,7 +24,19 @@ struct grassdrv_dev_t grassdrv_device;
 
 /* file_operations structure
  * Notes:
- * - One fops structure is allocated for each open file.
+ * - Each device driver has a fops structure containing methods (pointers to.
+ *   functions) that implement system calls for the device.
+ *
+ * - Each open file is associated with a 'fops' structure.
+ *   It does this by a 'fops' pointer to a 'populated' fops structure.
+ *   The kernel creates a reference to the 'fops' structure when open is called
+ *   on a file.
+ *   ^ 'fops' should not be confused with a 'file' structure, which is created
+ *     by the kernel whenever 'open' is called on a file.
+ *     The 'file' structure has a 'fops' pointer, the kernel will assign the 
+ *     'fops' pointer on open.
+ *     ^ This 'file' structure is kernel space, and should not be confused with
+ *       C library user space 'FILE' structure.
  *
  * - The fops structure generally contains function pointers to the driver
  *   functions that implement functionality for associated system call.
@@ -46,7 +57,6 @@ struct file_operations grassdrv_fops = {
   .write = grassdrv_write,
   .release = grassdrv_release, /* TODO: Is this needed? (Is it 'close()'?) */
 };
-
 
 /* ----- module parameters ----- */
 MODULE_AUTHOR("Christopher M. Grass");
