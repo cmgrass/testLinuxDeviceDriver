@@ -23,6 +23,13 @@ $ make
 ```
 
 ## To install device driver module:
+Install script
+```
+$ make
+$ sudo sh install_gdrv.sh
+```
+
+Otherwise, the script is doing at least the following:
 Use insmod
 ```
 $ insmod [filename] [module options...]
@@ -30,7 +37,7 @@ $ insmod [filename] [module options...]
 
 EX: (sudo)
 ```
-$ sudo insmod hello.ko
+$ sudo insmod grassdrv.ko
                     ^ Kernel object
 ```
 
@@ -54,6 +61,12 @@ Feb 16 13:24:24 cmgrass-ubuntu kernel: [ 1603.535161] HELLO World!
 ```
 
 ## Remove the module
+Uninstall script
+```
+$ sudo sh uninstall_gdrv.sh
+```
+
+Otherwise, the script is doing at least the following:
 ```
 $ sudo rmmod hello
 $ lsmod | grep hello
